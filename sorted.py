@@ -1,55 +1,28 @@
-import os
-# Вариант 1:
-with open('text__1.txt', 'w')  as f:
-    f = f.write('text_1.txt\n8\n')
+import os.path
 
+def comparator(doc):
+    return len(doc[2])
+ 
+def sorted_files():
+    file_path = os.path.join(os.getcwd())
+    file_list = []
+    for root, dirs, files in os.walk(file_path):
+        for name in files:
+            if name.endswith(".txt"):
+                with open(name, 'r',encoding='utf-8') as f:
+                    f_1 =f.read()
+                    f_2 = f_1.split('\n')
+                    f_3 = str(len(f_2))
+                    file_list.append([name, f_3, f_2])
+                file_list.sort(key=comparator)
+                
+                with open('new_file', 'w', encoding='utf-8') as fi:
+                    for filess in file_list:
+                        fi.write(filess[0])
+                        fi.write('\n')
+                        fi.write(filess[1])
+                        fi.write('\n')
+                        fi.write('\n'.join(filess[2]))
+                        fi.write('\n')
 
-with open('text__2.txt', 'w') as f:
-    f = f.write('text_2.txt\n1\n')
-
-
-with open('text__3.txt', 'w') as f:
-   f = f.write('text_3.txt\n9\n')
-
-
-filenames = ['text__2.txt','text_2.txt','text__1.txt', 'text_1.txt', 'text__3.txt', 'text_3.txt']
-with open('nev_text.txt', 'w', encoding='UTF-8') as outfile:
-    for fname in filenames:
-        with open(fname, 'r', encoding='utf=8') as infile:
-            for line in infile:
-                outfile.write(line)
-
-
-
-# Вариант второй:
-with open('text__1.txt', 'w')  as f:
-    f = f.write('text_1.txt\n8\n')
-
-
-with open('text__2.txt', 'w') as f:
-    f = f.write('text_2.txt\n1\n')
-
-
-with open('text__3.txt', 'w') as f:
-   f = f.write('text_3.txt\n9\n')
-
-with open('new_text_2.txt','w', encoding='utf-8') as w:
-    with open('text__2.txt','r') as r:
-        w.write(r.read())
-
-    with open('text_2.txt','r', encoding='utf-8') as r:
-        w.write(r.read()) 
-
-    with open('text__1.txt','r') as r:
-        w.write(r.read())
-
-    with open('text_1.txt','r', encoding='utf-8') as r:
-        w.write(r.read())
-
-    with open('text__3.txt','r') as r:
-        w.write(r.read())
-
-    with open('text_3.txt','r', encoding='utf=8') as r:
-        w.write(r.read()) 
-
-# Если снова не так, то я вообще не понимаю что требуется.          
+sorted_files()   
